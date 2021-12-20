@@ -22,3 +22,4 @@ APISecret=
 npm i
 node index.js
 ````
+It will start the node app on port 5000
