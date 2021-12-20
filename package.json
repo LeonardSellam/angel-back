@@ -9,7 +9,10 @@
   "author": "Leonard Sellam",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "moment": "^2.29.1",
+    "request": "^2.88.2"
   }
 }
