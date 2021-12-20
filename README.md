@@ -14,6 +14,7 @@ Create a [Zoom JWT App](https://marketplace.zoom.us/docs/guides/build/jwt-app), 
 ```
 APIKey= 
 APISecret=
+userEmail=
 ```
 
 ## Launch

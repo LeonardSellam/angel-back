@@ -14,6 +14,7 @@ app.use(cors())
 
 app.use(bodyParser.json())
 
+const userEmail = process.env.userEmail;
 
 const payload = {
     iss: process.env.APIKey,
@@ -29,7 +30,7 @@ app.post('/event', (req, res) => {
 
     var options = {
         'method': 'POST',
-        'url': 'https://api.zoom.us/v2/users/sellam.leonard@gmail.com/meetings',
+        'url': `https://api.zoom.us/v2/users/${userEmail}/meetings`,
         'headers': {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwt_token}`,
