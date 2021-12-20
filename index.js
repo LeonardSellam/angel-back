@@ -1,5 +1,7 @@
 const express = require('express')
 const moment = require('moment')
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const request = require('request');
 
 var bodyParser = require('body-parser')
@@ -7,26 +9,18 @@ const app = express()
 const port = 5000
 const cors = require('cors');
 
-const jwt_token;
-
 
 app.use(cors())
 
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.json())
 
 
+const payload = {
+    iss: process.env.APIKey,
+    exp: ((new Date()).getTime() + 5000)
+};
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.post('/events', (req, res) => {
-    console.log(req)
-    res.send('Hello World!')
-  })
+const jwt_token = jwt.sign(payload, process.env.APISecret);
 
 app.post('/event', (req, res) => {
     const startTime = moment(req.body.start);
@@ -44,7 +38,7 @@ app.post('/event', (req, res) => {
             "topic": req.body.val,
             "type":"2",
             "duration": duration.asMinutes(),
-            "start_time":"2020-09-16T11:00:00",
+            "start_time":startTime.format('YYYY-MM-DDTHH:mm:ss'),
             "timezone":"Europe/Paris",
             "password":"123456",
             "agenda":"AGENDA"
@@ -53,8 +47,8 @@ app.post('/event', (req, res) => {
       };
       request(options, function (error, response) {
         if (error) throw new Error(error);
-        console.log(response.body);
-        res.send(response.body.id)
+        const data = JSON.parse(response.body)
+        res.send({id: data.id, topic: data.topic})
       });
 })
 
